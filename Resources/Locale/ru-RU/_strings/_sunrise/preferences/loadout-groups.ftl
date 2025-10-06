@@ -104,3 +104,4 @@ loadout-group-commaid-backpack = Горничная командования, р
 loadout-group-commaid-neck = Горничная командования, шея
 loadout-group-commaid-shoes = Горничная командования, обувь
 loadout-group-commaid-gloves = Горничная командования, перчатки
+loadout-group-planet-prison-trinkets = Безделушки ПТ
