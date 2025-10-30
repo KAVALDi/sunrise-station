@@ -138,7 +138,6 @@
   name: loadout-group-blueshield-belt
   loadouts:
   - BlueShieldWebbing
-  - AssaultBeltBS
 
 - type: loadoutGroup
   id: BlueShieldNeck
