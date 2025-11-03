@@ -77,7 +77,7 @@
 
 - type: entity
   id: ClothingBeltHeadOfPrisonMetus
-  parent: ClothingBeltPrisonGuardianMetus
+  parent: ClothingBeltPrisonGuardianFilledMetus
   name: head of prison belt
   description: On the inner side, traces of wear, a sign of long service within walls where nothing is forgotten.
   components:
@@ -86,6 +86,15 @@
     - state: icon
     - state: overlay-icon
       color: "#000000"
+  - type: StorageFill
+    contents:
+    - id: Stunbaton
+    - id: RadioHandheldSecurity
+    - id: FlashlightSeclite
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: TearGasGrenade
+    - id: Flash
 
 - type: entity
   id: ClothingBeltPrisonInspectorMetus
