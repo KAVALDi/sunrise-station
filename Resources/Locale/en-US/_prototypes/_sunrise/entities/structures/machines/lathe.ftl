@@ -1,6 +1,6 @@
 ent-ExosuitFabricatorHyperConvection = hyper convection exosuit fabricator
     .desc = A highly-experimental Exosuit Fabricator that harnesses the power of extreme heat to slowly create objects more cost-effectively.
-ent-AutolathePrison = prison autolathe
+ent-AutolathePrisonMetus = prison autolathe
     .desc = Produces basic metal and glass items of prison standard.
 ent-SewingPrinterMetus = prison sewing printer
     .desc = Designed for producing textile items, maintaining order and identification within the prison.

@@ -73,7 +73,7 @@
   - type: OreSiloClient
 
 - type: entity
-  id: AutolathePrison
+  id: AutolathePrisonMetus
   parent: Autolathe
   name: prison autolathe
   description: Produces basic metal and glass items of prison standard.
