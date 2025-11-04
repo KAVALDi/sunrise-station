@@ -77,6 +77,7 @@
   parent: Autolathe
   name: prison autolathe
   description: Produces basic metal and glass items of prison standard.
+  suffix: Metus
   components:
   - type: Sprite
     sprite: _Sunrise/Structures/Machines/prison_autolathe.rsi
