@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -71,7 +72,7 @@ namespace Content.Server.Database
             foreach (var favorite in prefs.ConstructionFavorites)
                 constructionFavorites.Add(new ProtoId<ConstructionPrototype>(favorite));
 
-            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor), constructionFavorites);
+            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor, Color.Red), constructionFavorites);
         }
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
@@ -159,7 +160,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return new PlayerPreferences(new[] { new KeyValuePair<int, ICharacterProfile>(0, defaultProfile) }, 0, Color.FromHex(prefs.AdminOOCColor), []);
+            return new PlayerPreferences(new[] { new KeyValuePair<int, ICharacterProfile>(0, defaultProfile) }, 0, Color.FromHex(prefs.AdminOOCColor, Color.Red), []);
         }
 
         public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
@@ -278,11 +279,13 @@ namespace Content.Server.Database
                 new HumanoidCharacterAppearance
                 (
                     profile.HairName,
-                    Color.FromHex(profile.HairColor),
+                    Color.FromHex(profile.HairColor, Color.Black),
                     profile.FacialHairName,
-                    Color.FromHex(profile.FacialHairColor),
-                    Color.FromHex(profile.EyeColor),
-                    Color.FromHex(profile.SkinColor),
+                    Color.FromHex(profile.FacialHairColor, Color.Black),
+                    Color.FromHex(profile.EyeColor, Color.Black),
+                    string.IsNullOrWhiteSpace(profile.SkinColor)
+                        ? Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f))
+                        : Color.FromHex(profile.SkinColor, Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f))),
                     markings,
                     profile.Width,
                     profile.Height
@@ -290,13 +293,19 @@ namespace Content.Server.Database
                 {
                     // Sunrise: Load gradient settings from database
                     HairGradientEnabled = profile.HairGradientEnabled,
-                    HairGradientSecondaryColor = Color.FromHex(profile.HairGradientSecondaryColor ?? "#FFFFFF"),
+                    HairGradientSecondaryColor = string.IsNullOrWhiteSpace(profile.HairGradientSecondaryColor)
+                        ? Color.White
+                        : Color.FromHex(profile.HairGradientSecondaryColor, Color.White),
                     HairGradientDirection = profile.HairGradientDirection,
                     FacialHairGradientEnabled = profile.FacialHairGradientEnabled,
-                    FacialHairGradientSecondaryColor = Color.FromHex(profile.FacialHairGradientSecondaryColor ?? "#FFFFFF"),
+                    FacialHairGradientSecondaryColor = string.IsNullOrWhiteSpace(profile.FacialHairGradientSecondaryColor)
+                        ? Color.White
+                        : Color.FromHex(profile.FacialHairGradientSecondaryColor, Color.White),
                     FacialHairGradientDirection = profile.FacialHairGradientDirection,
                     AllMarkingsGradientEnabled = profile.AllMarkingsGradientEnabled,
-                    AllMarkingsGradientSecondaryColor = Color.FromHex(profile.AllMarkingsGradientSecondaryColor ?? "#FFFFFF"),
+                    AllMarkingsGradientSecondaryColor = string.IsNullOrWhiteSpace(profile.AllMarkingsGradientSecondaryColor)
+                        ? Color.White
+                        : Color.FromHex(profile.AllMarkingsGradientSecondaryColor, Color.White),
                     AllMarkingsGradientDirection = profile.AllMarkingsGradientDirection
                 },
                 spawnPriority,
