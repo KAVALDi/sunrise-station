@@ -20,6 +20,8 @@ ignore_list:
   - 'orange'
   - '$count'
   - 'v1'
+  - 'v0'
+  - 'Holo'
   - 'Nanotrasen'
   - 'float'
   - '$open'
