@@ -928,9 +928,9 @@
   - type: RandomSprite
     selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
       enum.AnomalyVisualLayers.Base:
-        anom: "#ffffff"
+        anomaly-liquid-vfx: "#ffffff"
       enum.AnomalyVisualLayers.Animated:
-        pulse: "#ffffff"
+        anomaly-liquid-pulse: "#ffffff"
   - type: PointLight
     radius: 4.0
     energy: 3.5
