@@ -75,13 +75,19 @@
     supercriticalSoundAtAnimationStart:
       collection: AnomalyPyroSupercritical
   - type: Sprite
-    sprite: Structures/Specific/Anomalies/pyro_anom.rsi
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_fire.rsi # Sunrise-Edit
     layers:
-    - state: anom
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
     - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 6.0
     energy: 7.5
@@ -130,12 +136,19 @@
       collection: AnomalyGravitySupercritical
     supercriticalDuration: 15s
   - type: Sprite
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_gravity.rsi # Sunrise-Edit
     layers:
-    - state: anom2
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom2-pulse
+    - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 5.0
     energy: 20
@@ -164,12 +177,19 @@
     supercriticalSoundAtAnimationStart:
       collection: AnomalyElectricitySupercritical
   - type: Sprite
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_electric.rsi # Sunrise-Edit
     layers:
-    - state: anom3
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom3-pulse
+    - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 2.0
     energy: 5.0
@@ -279,12 +299,19 @@
   suffix: Bluespace
   components:
   - type: Sprite
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_bluespace.rsi # Sunrise-Edit
     layers:
-    - state: anom4
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom4-pulse
+    - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 2.0
     energy: 7.5
@@ -328,13 +355,19 @@
   suffix: Ice
   components:
   - type: Sprite
-    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_ice.rsi # Sunrise-Edit
     layers:
-    - state: anom
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
     - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 2.0
     energy: 2.5
@@ -875,13 +908,19 @@
   suffix: Liquid
   components:
   - type: Sprite
-    sprite: Structures/Specific/Anomalies/liquid_anom.rsi
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_liquid.rsi # Sunrise-Edit
     layers:
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
     - state: anom
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
     - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: RandomSprite
     selected: # Initialized layer values. Edited through the ReagentProducerAnomalySystem
       enum.AnomalyVisualLayers.Base:
@@ -995,13 +1034,19 @@
   suffix: Shadow
   components:
   - type: Sprite
-    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_shadow.rsi # Sunrise-Edit
     layers:
-    - state: anom
+    # Sunrise-Start
+    - state: shadow-anomaly
+      shader: unshaded
+    - state: vfx
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
     - state: pulse
+      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+    # Sunrise-End
   - type: PointLight
     radius: 1.5
     energy: 12.5
