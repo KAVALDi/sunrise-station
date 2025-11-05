@@ -59,9 +59,19 @@
       types:
         Radiation: 10
 
+# Sunrise-Start
+- type: entity
+  abstract: true
+  id: BaseAnomalyNew
+  parent: BaseAnomaly
+  components:
+  - type: Sprite
+    sprite: _Sunrise/Structures/Specific/anomalies.rsi
+# Sunrise-End
+
 - type: entity
   id: AnomalyPyroclastic
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Pyroclastic
   components:
   - type: AmbientSound
@@ -75,15 +85,14 @@
     supercriticalSoundAtAnimationStart:
       collection: AnomalyPyroSupercritical
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_fire.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-pyroclastic-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-pyroclastic-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -126,7 +135,7 @@
 
 - type: entity
   id: AnomalyGravity
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Gravity
   components:
   - type: Anomaly
@@ -136,15 +145,14 @@
       collection: AnomalyGravitySupercritical
     supercriticalDuration: 15s
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_gravity.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-gravity-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-gravity-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -168,7 +176,7 @@
 
 - type: entity
   id: AnomalyElectricity
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Electricity
   components:
   - type: Anomaly
@@ -177,15 +185,14 @@
     supercriticalSoundAtAnimationStart:
       collection: AnomalyElectricitySupercritical
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_electric.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-electricity-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-electricity-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -295,19 +302,18 @@
 
 - type: entity
   id: AnomalyBluespace
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Bluespace
   components:
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_bluespace.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-bluespace-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-bluespace-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -351,19 +357,18 @@
 
 - type: entity
   id: AnomalyIce
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Ice
   components:
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_ice.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-ice-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-ice-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -904,19 +909,18 @@
 
 - type: entity
   id: AnomalyLiquid
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Liquid
   components:
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_liquid.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: anom
+    - state: anomaly-liquid-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-liquid-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
@@ -1030,19 +1034,18 @@
 
 - type: entity
   id: AnomalyShadow
-  parent: BaseAnomaly
+  parent: BaseAnomalyNew
   suffix: Shadow
   components:
   - type: Sprite
-    sprite: _Sunrise/Structures/Specific/Anomalies/anomaly_shadow.rsi # Sunrise-Edit
-    layers:
     # Sunrise-Start
+    layers:
     - state: shadow-anomaly
       shader: unshaded
-    - state: vfx
+    - state: anomaly-shadow-vfx
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: anomaly-shadow-pulse
       shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
