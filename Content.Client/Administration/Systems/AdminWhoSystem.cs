@@ -1,4 +1,5 @@
 using Content.Shared.Administration;
+using Robust.Shared.Network;
 
 namespace Content.Client.Administration.Systems;
 
@@ -7,6 +8,8 @@ namespace Content.Client.Administration.Systems;
 /// </summary>
 public sealed class AdminWhoSystem : EntitySystem
 {
+    [Dependency] private readonly IClientNetManager _netManager = default!;
+    
     public event Action<List<AdminWhoEntry>>? OnAdminWhoUpdate;
 
     public override void Initialize()
@@ -21,7 +24,8 @@ public sealed class AdminWhoSystem : EntitySystem
     /// </summary>
     public void RequestAdminWho()
     {
-        RaiseNetworkEvent(new RequestAdminWhoEvent());
+        if (_netManager.IsConnected)
+            RaiseNetworkEvent(new RequestAdminWhoEvent());
     }
 
     private void OnAdminWhoResponse(AdminWhoResponseEvent args, EntitySessionEventArgs session)

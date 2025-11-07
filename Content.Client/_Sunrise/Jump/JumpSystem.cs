@@ -5,6 +5,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -15,6 +16,7 @@ public sealed partial class JumpSystem : SharedJumpSystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IClientNetManager _netManager = default!;
 
     private TimeSpan _lastJumpTime;
     private static TimeSpan _jumpCooldown;
@@ -46,7 +48,8 @@ public sealed partial class JumpSystem : SharedJumpSystem
 
     private void OnJumpSoundEnabledOptionChanged(bool option)
     {
-        RaiseNetworkEvent(new ClientOptionDisableJumpSoundEvent(option));
+        if (_netManager.IsConnected)
+            RaiseNetworkEvent(new ClientOptionDisableJumpSoundEvent(option));
     }
 
     private void Jump(ICommonSession? session)

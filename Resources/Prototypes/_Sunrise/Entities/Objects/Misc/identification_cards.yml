@@ -669,7 +669,7 @@
       color: "#1b67a5"
     - state: stripe_bottom
       color: "#0e4069"
-    - sprite: *sunrise-icon-rsi
+    - sprite: *icon-rsi
       offset: *icon-offset
       state: Nanotrasen
   - type: Item
