@@ -1,5 +1,4 @@
 using Content.Shared.Guidebook;
-using Robust.Shared.Network;
 
 namespace Content.Client.Guidebook;
 
@@ -11,8 +10,6 @@ namespace Content.Client.Guidebook;
 /// </summary>
 public sealed class GuidebookDataSystem : EntitySystem
 {
-    [Dependency] private readonly IClientNetManager _netManager = default!;
-    
     private GuidebookData? _data;
 
     public override void Initialize()
@@ -22,8 +19,7 @@ public sealed class GuidebookDataSystem : EntitySystem
         SubscribeNetworkEvent<UpdateGuidebookDataEvent>(OnServerUpdated);
 
         // Request data from the server
-        if (_netManager.IsConnected)
-            RaiseNetworkEvent(new RequestGuidebookDataEvent());
+        RaiseNetworkEvent(new RequestGuidebookDataEvent());
     }
 
     private void OnServerUpdated(UpdateGuidebookDataEvent args)

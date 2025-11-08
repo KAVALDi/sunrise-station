@@ -1,6 +1,5 @@
 using Content.Shared._Sunrise.MentorHelp;
 using JetBrains.Annotations;
-using Robust.Shared.Network;
 
 namespace Content.Client._Sunrise.MentorHelp
 {
@@ -10,8 +9,6 @@ namespace Content.Client._Sunrise.MentorHelp
     [UsedImplicitly]
     public sealed class MentorHelpSystem : SharedMentorHelpSystem
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
-        
         public event EventHandler<MentorHelpTicketUpdateMessage>? OnTicketUpdated;
         public event EventHandler<MentorHelpTicketsListMessage>? OnTicketsListReceived;
         public event EventHandler<MentorHelpTicketMessagesMessage>? OnTicketMessagesReceived;
@@ -151,8 +148,7 @@ namespace Content.Client._Sunrise.MentorHelp
         /// </summary>
         public void RequestStatistics()
         {
-            if (_netManager.IsConnected)
-                RaiseNetworkEvent(new MentorHelpRequestStatisticsMessage());
+            RaiseNetworkEvent(new MentorHelpRequestStatisticsMessage());
         }
     }
 }
