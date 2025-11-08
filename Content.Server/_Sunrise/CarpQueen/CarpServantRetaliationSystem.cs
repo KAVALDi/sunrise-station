@@ -4,7 +4,6 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Sunrise.CarpQueen;
 
@@ -14,7 +13,6 @@ namespace Content.Server._Sunrise.CarpQueen;
 public sealed class CarpServantRetaliationSystem : EntitySystem
 {
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -69,18 +67,17 @@ public sealed class CarpServantRetaliationSystem : EntitySystem
 
             // Aggro on the attacker
             var exception = EnsureComp<FactionExceptionComponent>(carpUid);
-            _npcFaction.UnignoreEntity((carpUid, exception), attacker);
-            _npcFaction.AggroEntity(carpUid, attacker);
 
             // Also handle discipline logic: if attacker was in forbidden targets, remove it
             // This allows the carp to attack again after the attacker damaged the owner
             if (memory.ForbiddenTargets.Remove(attacker))
             {
                 Dirty(carpUid, memory);
-
-                // Remove from faction exceptions to allow attack again
-                _npcFaction.UnignoreEntity((carpUid, exception), attacker);
             }
+
+            // Unignore and aggro the attacker (allows attack after discipline was cleared)
+            _npcFaction.UnignoreEntity((carpUid, exception), attacker);
+            _npcFaction.AggroEntity((carpUid, exception), (attacker, null));
         }
     }
 }

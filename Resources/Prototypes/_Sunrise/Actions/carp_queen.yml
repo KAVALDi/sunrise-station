@@ -28,7 +28,7 @@
       state: stay
     priority: 5
   - type: InstantAction
-    event: !type:RatKingOrderActionEvent
+    event: !type:CarpQueenOrderActionEvent
       type: Stay
 
 - type: entity
@@ -47,7 +47,7 @@
       state: follow
     priority: 6
   - type: InstantAction
-    event: !type:RatKingOrderActionEvent
+    event: !type:CarpQueenOrderActionEvent
       type: Follow
 
 - type: entity
@@ -66,8 +66,8 @@
       state: attack
     priority: 7
   - type: InstantAction
-    event: !type:RatKingOrderActionEvent
-      type: CheeseEm
+    event: !type:CarpQueenOrderActionEvent
+      type: Kill
 
 - type: entity
   parent: BaseAction
@@ -85,7 +85,7 @@
       state: loose
     priority: 8
   - type: InstantAction
-    event: !type:RatKingOrderActionEvent
+    event: !type:CarpQueenOrderActionEvent
       type: Loose
 
 

@@ -41,7 +41,7 @@ public sealed class CarpServantBiteSystem : EntitySystem
             var solution = new Solution();
             foreach (var (reagentId, _) in memory.RememberedReagents)
             {
-                if (_protos.TryIndex<ReagentPrototype>(reagentId, out var reagentProto))
+                if (_protos.HasIndex<ReagentPrototype>(reagentId))
                 {
                     solution.AddReagent(reagentId, memory.BiteReagentAmount);
                 }

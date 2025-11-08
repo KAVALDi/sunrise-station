@@ -10,7 +10,7 @@ public sealed partial class CarpEggComponent : Component
     /// <summary>
     /// Required puddle volume (u) to hatch.
     /// </summary>
-    [DataField("requiredVolume")] public float RequiredVolume = 30f;
+    [DataField("requiredVolume")] public float RequiredVolume = 15f;
 
     /// <summary>
     /// Seconds between hatch checks.

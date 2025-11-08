@@ -16,7 +16,7 @@ public abstract class SharedCarpQueenSystem : EntitySystem
     {
         SubscribeLocalEvent<CarpQueenComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CarpQueenComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<CarpQueenComponent, RatKingOrderActionEvent>(OnOrderAction);
+        SubscribeLocalEvent<CarpQueenComponent, CarpQueenOrderActionEvent>(OnOrderAction);
     }
 
     protected virtual void OnStartup(EntityUid uid, CarpQueenComponent component, ComponentStartup args)
@@ -52,7 +52,7 @@ public abstract class SharedCarpQueenSystem : EntitySystem
         _actions.RemoveAction(actions, component.ActionOrderLooseEntity);
     }
 
-    private void OnOrderAction(EntityUid uid, CarpQueenComponent component, RatKingOrderActionEvent args)
+    private void OnOrderAction(EntityUid uid, CarpQueenComponent component, CarpQueenOrderActionEvent args)
     {
         if (component.CurrentOrder == args.Type)
             return;
@@ -68,10 +68,10 @@ public abstract class SharedCarpQueenSystem : EntitySystem
 
     private void UpdateActions(EntityUid uid, CarpQueenComponent component)
     {
-        _actions.SetToggled(component.ActionOrderStayEntity, component.CurrentOrder == RatKingOrderType.Stay);
-        _actions.SetToggled(component.ActionOrderFollowEntity, component.CurrentOrder == RatKingOrderType.Follow);
-        _actions.SetToggled(component.ActionOrderKillEntity, component.CurrentOrder == RatKingOrderType.CheeseEm);
-        _actions.SetToggled(component.ActionOrderLooseEntity, component.CurrentOrder == RatKingOrderType.Loose);
+        _actions.SetToggled(component.ActionOrderStayEntity, component.CurrentOrder == CarpQueenOrderType.Stay);
+        _actions.SetToggled(component.ActionOrderFollowEntity, component.CurrentOrder == CarpQueenOrderType.Follow);
+        _actions.SetToggled(component.ActionOrderKillEntity, component.CurrentOrder == CarpQueenOrderType.Kill);
+        _actions.SetToggled(component.ActionOrderLooseEntity, component.CurrentOrder == CarpQueenOrderType.Loose);
         _actions.StartUseDelay(component.ActionOrderStayEntity);
         _actions.StartUseDelay(component.ActionOrderFollowEntity);
         _actions.StartUseDelay(component.ActionOrderKillEntity);
@@ -86,12 +86,28 @@ public abstract class SharedCarpQueenSystem : EntitySystem
         }
     }
 
-    public virtual void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+    public virtual void UpdateServantNpc(EntityUid uid, CarpQueenOrderType orderType)
     {
     }
 
     public virtual void DoCommandCallout(EntityUid uid, CarpQueenComponent component)
     {
+    }
+
+    /// <summary>
+    /// Converts CarpQueenOrderType to RatKingOrderType for HTN compatibility.
+    /// HTN compounds use RatKingOrderType, so we need to map our order types to them.
+    /// </summary>
+    public static RatKingOrderType ConvertToRatKingOrder(CarpQueenOrderType orderType)
+    {
+        return orderType switch
+        {
+            CarpQueenOrderType.Stay => RatKingOrderType.Stay,
+            CarpQueenOrderType.Follow => RatKingOrderType.Follow,
+            CarpQueenOrderType.Kill => RatKingOrderType.CheeseEm,
+            CarpQueenOrderType.Loose => RatKingOrderType.Loose,
+            _ => RatKingOrderType.Loose
+        };
     }
 }
 

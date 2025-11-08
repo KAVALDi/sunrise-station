@@ -5,12 +5,12 @@ using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Server.Chat.Systems;
 using Content.Shared._Sunrise.CarpQueen;
-using Content.Shared.RatKing;
 using Content.Shared.Pointing;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Dataset;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Content.Shared.NPC.Components;
@@ -57,7 +57,7 @@ public sealed class CarpQueenSystem : SharedCarpQueenSystem
         if (component.ArmyMobSpawnOptions.Count == 0)
             return;
 
-        // Limit total eggs + servants to 3. Prune invalid references first.
+        // Limit total eggs + servants to MaxArmySize. Prune invalid references first.
         var toRemoveServants = new List<EntityUid>();
         var aliveServants = 0;
         foreach (var s in component.Servants)
@@ -124,7 +124,7 @@ public sealed class CarpQueenSystem : SharedCarpQueenSystem
 
     private void OnPointedAt(EntityUid uid, CarpQueenComponent component, ref AfterPointedAtEvent args)
     {
-        if (component.CurrentOrder != RatKingOrderType.CheeseEm)
+        if (component.CurrentOrder != CarpQueenOrderType.Kill)
             return;
 
         var target = args.Pointed;
@@ -194,7 +194,7 @@ public sealed class CarpQueenSystem : SharedCarpQueenSystem
         }
     }
 
-    public override void UpdateServantNpc(EntityUid uid, RatKingOrderType orderType)
+    public override void UpdateServantNpc(EntityUid uid, CarpQueenOrderType orderType)
     {
         base.UpdateServantNpc(uid, orderType);
 
@@ -212,11 +212,14 @@ public sealed class CarpQueenSystem : SharedCarpQueenSystem
         _npc.SetBlackboard(uid, NPCBlackboard.FollowTarget, new EntityCoordinates(servant.Queen.Value, Vector2.Zero));
 
         // Configure order and follow distances as requested (close follow ~1 tile)
-        _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, orderType);
+        // Convert CarpQueenOrderType to RatKingOrderType for HTN compatibility
+        var ratKingOrder = SharedCarpQueenSystem.ConvertToRatKingOrder(orderType);
+        _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, ratKingOrder);
         _npc.SetBlackboard(uid, "FollowCloseRange", 1.0f);
         _npc.SetBlackboard(uid, "FollowRange", 1.5f);
         _htn.Replan(htn);
     }
+
 
     public override void DoCommandCallout(EntityUid uid, CarpQueenComponent component)
     {

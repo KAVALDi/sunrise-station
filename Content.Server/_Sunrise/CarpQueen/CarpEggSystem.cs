@@ -23,7 +23,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Maths;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server._Sunrise.CarpQueen;
 
@@ -116,13 +115,16 @@ public sealed class CarpEggSystem : CarpQueenAccessSystem
         if (servant.Queen != null && TryComp(servant.Queen.Value, out CarpQueenComponent? queen))
         {
             _npc.SetBlackboard(uid, NPCBlackboard.FollowTarget, new EntityCoordinates(servant.Queen.Value, Vector2.Zero));
-            _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, queen.CurrentOrder);
+            // Convert CarpQueenOrderType to RatKingOrderType for HTN compatibility
+            var ratKingOrder = SharedCarpQueenSystem.ConvertToRatKingOrder(queen.CurrentOrder);
+            _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, ratKingOrder);
             _npc.SetBlackboard(uid, "FollowCloseRange", 1.0f);
             _npc.SetBlackboard(uid, "FollowRange", 1.5f);
         }
         else
         {
             // No queen: default to Loose so directly spawned servants are active
+            // Convert to RatKingOrderType for HTN compatibility
             _npc.SetBlackboard(uid, NPCBlackboard.CurrentOrders, RatKingOrderType.Loose);
         }
 

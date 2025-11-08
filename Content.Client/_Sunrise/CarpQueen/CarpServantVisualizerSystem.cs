@@ -1,7 +1,6 @@
 using Content.Shared._Sunrise.CarpQueen;
 using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client._Sunrise.CarpQueen;

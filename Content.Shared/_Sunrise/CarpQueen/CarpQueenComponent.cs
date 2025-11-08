@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.Actions;
-using Content.Shared.RatKing; // Reuse order enum/events
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -43,10 +42,9 @@ public sealed partial class CarpQueenComponent : Component
 
     /// <summary>
     /// Current order applied to servants.
-    /// Reuse RatKingOrderType to integrate with existing HTN preconditions.
     /// </summary>
     [DataField("currentOrders"), AutoNetworkedField]
-    public RatKingOrderType CurrentOrder = RatKingOrderType.Loose;
+    public CarpQueenOrderType CurrentOrder = CarpQueenOrderType.Loose;
 
     /// <summary>
     /// List of spawned servants controlled by the queen.
@@ -77,56 +75,56 @@ public sealed partial class CarpQueenComponent : Component
     /// Dataset mapping for order callouts (spoken lines on order change).
     /// </summary>
     [DataField("orderCallouts")]
-    public Dictionary<RatKingOrderType, string> OrderCallouts = new()
+    public Dictionary<CarpQueenOrderType, string> OrderCallouts = new()
     {
-        { RatKingOrderType.Stay, "CarpQueenCommandStay" },
-        { RatKingOrderType.Follow, "CarpQueenCommandFollow" },
-        { RatKingOrderType.CheeseEm, "CarpQueenCommandKill" },
-        { RatKingOrderType.Loose, "CarpQueenCommandLoose" }
+        { CarpQueenOrderType.Stay, "CarpQueenCommandStay" },
+        { CarpQueenOrderType.Follow, "CarpQueenCommandFollow" },
+        { CarpQueenOrderType.Kill, "CarpQueenCommandKill" },
+        { CarpQueenOrderType.Loose, "CarpQueenCommandLoose" }
     };
 
-        /// <summary>
-        ///     Hunger consumed per summon use.
-        /// </summary>
-        [DataField("hungerPerSummon")]
-        public float HungerPerSummon = 25f;
+    /// <summary>
+    /// Hunger consumed per summon use.
+    /// </summary>
+    [DataField("hungerPerSummon")]
+    public float HungerPerSummon = 25f;
 
-        /// <summary>
-        ///     Tracks last observed hunger to grant small healing when eating.
-        ///     Server-side only; not networked.
-        /// </summary>
-        public float LastObservedHunger;
+    /// <summary>
+    /// Tracks last observed hunger to grant small healing when eating.
+    /// Server-side only; not networked.
+    /// </summary>
+    public float LastObservedHunger;
 
-        /// <summary>
-        ///     Maximum total servants + eggs the queen can have at once.
-        /// </summary>
-        [DataField("maxArmySize")]
-        public int MaxArmySize = 5;
+    /// <summary>
+    /// Maximum total servants + eggs the queen can have at once.
+    /// </summary>
+    [DataField("maxArmySize")]
+    public int MaxArmySize = 5;
 
-        /// <summary>
-        ///     HP healed per 1 unit of hunger gained (when eating).
-        /// </summary>
-        [DataField("healPerHunger")]
-        public float HealPerHunger = 0.2f;
+    /// <summary>
+    /// HP healed per 1 unit of hunger gained (when eating).
+    /// </summary>
+    [DataField("healPerHunger")]
+    public float HealPerHunger = 0.2f;
 
-        /// <summary>
-        ///     Maximum HP healed per tick from eating.
-        /// </summary>
-        [DataField("maxHealPerTick")]
-        public float MaxHealPerTick = 5f;
+    /// <summary>
+    /// Maximum HP healed per tick from eating.
+    /// </summary>
+    [DataField("maxHealPerTick")]
+    public float MaxHealPerTick = 5f;
 
-        /// <summary>
-        ///     Spawn chances for different carp types when hatching from egg.
-        ///     Key: prototype ID, Value: chance (0-100).
-        ///     If sum is less than 100, remaining chance goes to default (MobCarpServantRainbow).
-        /// </summary>
-        [DataField("spawnChances")]
-        public Dictionary<string, int> SpawnChances = new()
-        {
-            { "MobCarpServantRainbow", 80 },
-            { "MobCarpServantHolo", 10 },
-            { "MobCarpServantDungeon", 10 }
-        };
+    /// <summary>
+    /// Spawn chances for different carp types when hatching from egg.
+    /// Key: prototype ID, Value: chance (0-100).
+    /// If sum is less than 100, remaining chance goes to default (MobCarpServantRainbow).
+    /// </summary>
+    [DataField("spawnChances")]
+    public Dictionary<string, int> SpawnChances = new()
+    {
+        { "MobCarpServantRainbow", 80 },
+        { "MobCarpServantHolo", 10 },
+        { "MobCarpServantDungeon", 10 }
+    };
 }
 
 
