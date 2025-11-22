@@ -11,7 +11,9 @@ namespace Content.Client._Sunrise.TapePlayer
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
+
+        private bool _tapePlayerClientEnabled;
 
         public override void Initialize()
         {
@@ -20,6 +22,8 @@ namespace Content.Client._Sunrise.TapePlayer
             SubscribeLocalEvent<TapePlayerComponent, AnimationCompletedEvent>(OnAnimationCompleted);
             SubscribeLocalEvent<TapePlayerComponent, AfterAutoHandleStateEvent>(OnTapePlayerAfterState);
             _cfg.OnValueChanged(SunriseCCVars.TapePlayerClientEnabled, OnTapePlayerClientOptionChanged, true);
+
+            _netManager.Connected += OnConnected;
         }
 
         public override void Shutdown()
@@ -30,8 +34,14 @@ namespace Content.Client._Sunrise.TapePlayer
 
         private void OnTapePlayerClientOptionChanged(bool option)
         {
+            _tapePlayerClientEnabled = option;
             if (_netManager.IsConnected)
-                RaiseNetworkEvent(new ClientOptionTapePlayerEvent(option));
+                RaiseNetworkEvent(new ClientOptionTapePlayerEvent(_tapePlayerClientEnabled));
+        }
+
+        private async void OnConnected(object? sender, NetChannelArgs e)
+        {
+            RaiseNetworkEvent(new ClientOptionTapePlayerEvent(_tapePlayerClientEnabled));
         }
 
         private void OnTapePlayerAfterState(Entity<TapePlayerComponent> ent, ref AfterAutoHandleStateEvent args)
